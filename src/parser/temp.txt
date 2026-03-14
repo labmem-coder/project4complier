@@ -210,7 +210,7 @@ end.
 
 # test 9
 # 综合测试：覆盖所有 5 个部分的文法规则
-# state ：
+# state ：pass
 program ComprehensiveTest(input, output, debug);
 const
   MAX_SIZE = 100;
