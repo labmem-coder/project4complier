@@ -1,0 +1,309 @@
+# test 4
+# 1. 程序结构相关（1/5）
+# state ：pass
+program TestStructure(input, output, error);
+const
+  MAX = 100;
+  MIN = -50;
+  POSITIVE = +25;
+  LETTER = 'A';
+var
+  i: integer;
+begin
+end.
+
+
+# test 5
+# 2. 变量与子程序声明相关（2/5）
+# state ：pass
+program TestVarSubprog;
+var
+  x, y: integer;
+  a, b: real;
+  flag: boolean;
+  ch: char;
+  arr: array [1..10] of integer;
+  matrix: array [1..3, 1..4] of real;
+
+procedure SimpleProc;
+begin
+end;
+
+procedure ProcWithParams(x, y: integer; var z: real);
+begin
+end;
+
+function Add(a, b: integer): integer;
+var
+  result: integer;
+begin
+end;
+
+function GetFlag(var s: char; n: integer): boolean;
+const
+  LIMIT = 100;
+begin
+end;
+
+begin
+end.
+
+
+# test 6
+# 3. 子程序参数与复合语句相关（3/5）
+# state ：pass
+program TestCompoundStmt;
+var
+  x, y: integer;
+  a: real;
+
+procedure FullBody(n: integer; var m: integer);
+const
+  LOCAL_MAX = 50;
+var
+  temp: integer;
+begin
+  temp := n;
+  m := temp
+end;
+
+function Calc(a, b, c: integer): integer;
+var
+  r: integer;
+begin
+  r := a;
+  r := b;
+  r := c
+end;
+
+begin
+  x := 1;
+  y := 2;
+  begin
+    a := 3
+  end;
+  x := y
+end.
+
+
+# test 7
+# 4. 语句与变量相关（4/5）
+# state ：pass
+program TestStatements;
+var
+  x, y, z: integer;
+  arr: array [1..5] of integer;
+  matrix: array [1..2, 1..3] of real;
+  flag: boolean;
+
+function GetValue: integer;
+begin
+  GetValue := 10
+end;
+
+procedure PrintNum(n: integer);
+begin
+end;
+
+begin
+  x := 5;
+  arr[1] := x;
+  matrix[1, 2] := 3.14;
+  
+  GetValue := x + y;
+  
+  PrintNum(x);
+  PrintNum(arr[2]);
+  
+  if x > 0 then
+    y := 1
+  else
+    y := 0;
+  
+  for z := 1 to 10 do
+    arr[z] := z;
+  
+  read(x, y, arr[3]);
+  write(x, y, arr[1], matrix[2, 3]);
+  
+  begin
+    x := x + 1;
+    y := y - 1
+  end
+end.
+
+
+# test 8
+# 5. 过程调用与表达式相关（5/5）
+# state ：pass
+program TestExpressions;
+var
+  a, b, c: integer;
+  x, y: real;
+  flag1, flag2: boolean;
+
+function Max(m, n: integer): integer;
+begin
+  Max := m
+end;
+
+function Min(m, n: integer): integer;
+begin
+  Min := n
+end;
+
+procedure NoParam;
+begin
+end;
+
+procedure OneParam(n: integer);
+begin
+end;
+
+procedure MultiParam(p, q, r: integer);
+begin
+end;
+
+begin
+  NoParam;
+  OneParam(5);
+  MultiParam(1, 2, 3);
+  
+  a := 10;
+  b := -5;
+  c := a + b;
+  c := a - b;
+  c := a * b;
+  c := a / b;
+  c := a div b;
+  c := a mod b;
+  
+  x := 3.14;
+  y := -x;
+  
+  flag1 := not flag2;
+  flag1 := a and b;
+  flag1 := a or b;
+  
+  flag1 := a = b;
+  flag1 := a <> b;
+  flag1 := a < b;
+  flag1 := a <= b;
+  flag1 := a > b;
+  flag1 := a >= b;
+  
+  c := (a + b) * c;
+  c := a + (b * c);
+  c := ((a + b) * (c - a)) / (b + 1);
+  
+  c := Max(a, b);
+  c := Max(a + 1, b - 1);
+  c := Max(Max(a, b), Min(b, c));
+  
+  c := -a + b;
+  c := -(a + b);
+  flag1 := not (a > b);
+  
+  c := a + b - c * a / b + (a mod b) - (a div c)
+end.
+
+
+# test 9
+# 综合测试：覆盖所有 5 个部分的文法规则
+# state ：
+program ComprehensiveTest(input, output, debug);
+const
+  MAX_SIZE = 100;
+  MIN_VALUE = -50;
+  PI = +3;
+  LETTER_A = 'A';
+var
+  i, j, k: integer;
+  sum, avg: real;
+  done, found: boolean;
+  ch: char;
+  numbers: array [1..10] of integer;
+  matrix: array [1..3, 1..3] of real;
+
+function Add(a, b: integer): integer;
+begin
+  Add := a + b
+end;
+
+function Multiply(x, y: real): real;
+begin
+  Multiply := x * y
+end;
+
+procedure Swap(var x, y: integer);
+var
+  temp: integer;
+begin
+  temp := x;
+  x := y;
+  y := temp
+end;
+
+procedure PrintArray(n: integer);
+var
+  idx: integer;
+begin
+  for idx := 1 to n do
+    write(numbers[idx])
+end;
+
+function Factorial(n: integer): integer;
+var
+  result: integer;
+begin
+  if n <= 1 then
+    result := 1
+  else
+    result := n * Factorial(n - 1);
+  Factorial := result
+end;
+
+begin
+  i := 0;
+  sum := 0.0;
+  done := not found;
+  
+  read(i, j);
+  k := Add(i, j);
+  write(k);
+  
+  numbers[1] := 10;
+  numbers[2] := -5;
+  matrix[1, 1] := 3.14;
+  
+  Swap(i, j);
+  
+  if i > j then
+    k := i
+  else
+    k := j;
+  
+  for i := 1 to 10 do
+  begin
+    numbers[i] := i * 2;
+    sum := sum + numbers[i]
+  end;
+  
+  avg := sum / 10;
+  
+  k := (i + j) * k - (i div j) + (i mod j);
+  done := (i = j) or (i <> j) and (i < j) or (i <= j) or (i > j) or (i >= j);
+  
+  k := Factorial(5);
+  sum := Multiply(3.14, 2.0);
+  
+  PrintArray(10);
+  
+  begin
+    i := i + 1;
+    j := j - 1;
+    k := not done and found or (i >= j)
+  end;
+  
+  write(i, j, k, sum, avg, numbers[5], matrix[2, 2])
+end.

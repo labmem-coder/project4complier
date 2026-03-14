@@ -1,0 +1,171 @@
+# Test 6: Subprogram parameters and compound statement grammar rules (Section 3)
+# Covers: subprogram_body with both const AND var, compound_statement with statements,
+#         statement_list with multiple statements, nested compound_statement,
+#         value_parameter with 3-id idlist (deep recursion)
+# Source:
+#   program TestCompoundStmt;
+#   var
+#     x, y: integer;
+#     a: real;
+#
+#   procedure FullBody(n: integer; var m: integer);
+#   const
+#     LOCAL_MAX = 50;
+#   var
+#     temp: integer;
+#   begin
+#     temp := n;
+#     m := temp
+#   end;
+#
+#   function Calc(a, b, c: integer): integer;
+#   var
+#     r: integer;
+#   begin
+#     r := a;
+#     r := b;
+#     r := c
+#   end;
+#
+#   begin
+#     x := 1;
+#     y := 2;
+#     begin
+#       a := 3
+#     end;
+#     x := y
+#   end.
+#
+# Line 1: program TestCompoundStmt;
+PROGRAM program 1 1
+ID TestCompoundStmt 1 9
+SEMICOLON ; 1 25
+# Line 2: var
+VAR var 2 1
+# Line 3: x, y: integer;
+ID x 3 3
+COMMA , 3 4
+ID y 3 6
+COLON : 3 7
+INTEGER integer 3 9
+SEMICOLON ; 3 16
+# Line 4: a: real;
+ID a 4 3
+COLON : 4 4
+REAL real 4 6
+SEMICOLON ; 4 10
+# Line 5: (empty)
+# Line 6: procedure FullBody(n: integer; var m: integer);
+PROCEDURE procedure 6 1
+ID FullBody 6 11
+LPAREN ( 6 19
+ID n 6 20
+COLON : 6 21
+INTEGER integer 6 23
+SEMICOLON ; 6 30
+VAR var 6 32
+ID m 6 36
+COLON : 6 37
+INTEGER integer 6 39
+RPAREN ) 6 46
+SEMICOLON ; 6 47
+# Line 7: const
+CONST const 7 1
+# Line 8: LOCAL_MAX = 50;
+ID LOCAL_MAX 8 3
+EQ = 8 13
+NUMBER 50 8 15
+SEMICOLON ; 8 17
+# Line 9: var
+VAR var 9 1
+# Line 10: temp: integer;
+ID temp 10 3
+COLON : 10 7
+INTEGER integer 10 9
+SEMICOLON ; 10 16
+# Line 11: begin
+BEGIN begin 11 1
+# Line 12: temp := n;
+ID temp 12 3
+ASSIGN := 12 8
+ID n 12 11
+SEMICOLON ; 12 12
+# Line 13: m := temp
+ID m 13 3
+ASSIGN := 13 5
+ID temp 13 8
+# Line 14: end;
+END end 14 1
+SEMICOLON ; 14 4
+# Line 15: (empty)
+# Line 16: function Calc(a, b, c: integer): integer;
+FUNCTION function 16 1
+ID Calc 16 10
+LPAREN ( 16 14
+ID a 16 15
+COMMA , 16 16
+ID b 16 18
+COMMA , 16 19
+ID c 16 21
+COLON : 16 22
+INTEGER integer 16 24
+RPAREN ) 16 31
+COLON : 16 32
+INTEGER integer 16 34
+SEMICOLON ; 16 41
+# Line 17: var
+VAR var 17 1
+# Line 18: r: integer;
+ID r 18 3
+COLON : 18 4
+INTEGER integer 18 6
+SEMICOLON ; 18 13
+# Line 19: begin
+BEGIN begin 19 1
+# Line 20: r := a;
+ID r 20 3
+ASSIGN := 20 5
+ID a 20 8
+SEMICOLON ; 20 9
+# Line 21: r := b;
+ID r 21 3
+ASSIGN := 21 5
+ID b 21 8
+SEMICOLON ; 21 9
+# Line 22: r := c
+ID r 22 3
+ASSIGN := 22 5
+ID c 22 8
+# Line 23: end;
+END end 23 1
+SEMICOLON ; 23 4
+# Line 24: (empty)
+# Line 25: begin
+BEGIN begin 25 1
+# Line 26: x := 1;
+ID x 26 3
+ASSIGN := 26 5
+NUMBER 1 26 8
+SEMICOLON ; 26 9
+# Line 27: y := 2;
+ID y 27 3
+ASSIGN := 27 5
+NUMBER 2 27 8
+SEMICOLON ; 27 9
+# Line 28: begin
+BEGIN begin 28 3
+# Line 29: a := 3
+ID a 29 5
+ASSIGN := 29 7
+NUMBER 3 29 10
+# Line 30: end;
+END end 30 3
+SEMICOLON ; 30 6
+# Line 31: x := y
+ID x 31 3
+ASSIGN := 31 5
+ID y 31 8
+# Line 32: end.
+END end 32 1
+DOT . 32 4
+END_OF_FILE EOF 33 1

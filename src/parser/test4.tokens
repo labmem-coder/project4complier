@@ -1,0 +1,52 @@
+# Test 4: Program structure grammar rules (Section 1)
+# Covers: programstruct, program_head with idlist, const_declarations,
+#         const_value (+num, -num, num, 'letter'), program_body structure
+# Source:
+#   program TestStructure(input, output, error);
+#   const
+#     MAX = 100;
+#     MIN = -50;
+#     POSITIVE = +25;
+#     LETTER = 'A';
+#   var
+#     i: integer;
+#   begin
+#   end.
+PROGRAM program 1 1
+ID TestStructure 1 9
+LPAREN ( 1 22
+ID input 1 23
+COMMA , 1 28
+ID output 1 30
+COMMA , 1 36
+ID error 1 38
+RPAREN ) 1 43
+SEMICOLON ; 1 44
+CONST const 2 1
+ID MAX 3 3
+EQ = 3 7
+NUMBER 100 3 9
+SEMICOLON ; 3 12
+ID MIN 4 3
+EQ = 4 7
+MINUS - 4 9
+NUMBER 50 4 10
+SEMICOLON ; 4 12
+ID POSITIVE 5 3
+EQ = 5 12
+PLUS + 5 14
+NUMBER 25 5 15
+SEMICOLON ; 5 17
+ID LETTER 6 3
+EQ = 6 10
+CHAR_LITERAL A 6 12
+SEMICOLON ; 6 15
+VAR var 7 1
+ID i 8 3
+COLON : 8 4
+INTEGER integer 8 6
+SEMICOLON ; 8 13
+BEGIN begin 9 1
+END end 10 1
+DOT . 10 4
+END_OF_FILE EOF 11 1

@@ -1,0 +1,190 @@
+# Test 5: Variable and subprogram declaration grammar rules (Section 2)
+# Covers: var_declaration chaining, all 4 basic_types, array with single/multi period,
+#         procedure (with/without params), function with return type,
+#         value_parameter, var_parameter, parameter_list chaining,
+#         subprogram_body with const/var declarations
+# Source:
+#   program TestVarSubprog;
+#   var
+#     x, y: integer;
+#     a, b: real;
+#     flag: boolean;
+#     ch: char;
+#     arr: array [1..10] of integer;
+#     matrix: array [1..3, 1..4] of real;
+#
+#   procedure SimpleProc;
+#   begin
+#   end;
+#
+#   procedure ProcWithParams(x, y: integer; var z: real);
+#   begin
+#   end;
+#
+#   function Add(a, b: integer): integer;
+#   var
+#     result: integer;
+#   begin
+#   end;
+#
+#   function GetFlag(var s: char; n: integer): boolean;
+#   const
+#     LIMIT = 100;
+#   begin
+#   end;
+#
+#   begin
+#   end.
+#
+# Line 1: program TestVarSubprog;
+PROGRAM program 1 1
+ID TestVarSubprog 1 9
+SEMICOLON ; 1 23
+# Line 2: var
+VAR var 2 1
+# Line 3: x, y: integer;
+ID x 3 3
+COMMA , 3 4
+ID y 3 6
+COLON : 3 7
+INTEGER integer 3 9
+SEMICOLON ; 3 16
+# Line 4: a, b: real;
+ID a 4 3
+COMMA , 4 4
+ID b 4 6
+COLON : 4 7
+REAL real 4 9
+SEMICOLON ; 4 13
+# Line 5: flag: boolean;
+ID flag 5 3
+COLON : 5 7
+BOOLEAN boolean 5 9
+SEMICOLON ; 5 16
+# Line 6: ch: char;
+ID ch 6 3
+COLON : 6 5
+CHAR char 6 7
+SEMICOLON ; 6 11
+# Line 7: arr: array [1..10] of integer;
+ID arr 7 3
+COLON : 7 6
+ARRAY array 7 8
+LBRACKET [ 7 14
+NUMBER 1 7 15
+DOTDOT .. 7 16
+NUMBER 10 7 18
+RBRACKET ] 7 20
+OF of 7 22
+INTEGER integer 7 25
+SEMICOLON ; 7 32
+# Line 8: matrix: array [1..3, 1..4] of real;
+ID matrix 8 3
+COLON : 8 9
+ARRAY array 8 11
+LBRACKET [ 8 17
+NUMBER 1 8 18
+DOTDOT .. 8 19
+NUMBER 3 8 21
+COMMA , 8 22
+NUMBER 1 8 24
+DOTDOT .. 8 25
+NUMBER 4 8 27
+RBRACKET ] 8 28
+OF of 8 30
+REAL real 8 33
+SEMICOLON ; 8 37
+# Line 9: (empty)
+# Line 10: procedure SimpleProc;
+PROCEDURE procedure 10 1
+ID SimpleProc 10 11
+SEMICOLON ; 10 21
+# Line 11: begin
+BEGIN begin 11 1
+# Line 12: end;
+END end 12 1
+SEMICOLON ; 12 4
+# Line 13: (empty)
+# Line 14: procedure ProcWithParams(x, y: integer; var z: real);
+PROCEDURE procedure 14 1
+ID ProcWithParams 14 11
+LPAREN ( 14 25
+ID x 14 26
+COMMA , 14 27
+ID y 14 29
+COLON : 14 30
+INTEGER integer 14 32
+SEMICOLON ; 14 39
+VAR var 14 41
+ID z 14 45
+COLON : 14 46
+REAL real 14 48
+RPAREN ) 14 52
+SEMICOLON ; 14 53
+# Line 15: begin
+BEGIN begin 15 1
+# Line 16: end;
+END end 16 1
+SEMICOLON ; 16 4
+# Line 17: (empty)
+# Line 18: function Add(a, b: integer): integer;
+FUNCTION function 18 1
+ID Add 18 10
+LPAREN ( 18 13
+ID a 18 14
+COMMA , 18 15
+ID b 18 17
+COLON : 18 18
+INTEGER integer 18 20
+RPAREN ) 18 27
+COLON : 18 28
+INTEGER integer 18 30
+SEMICOLON ; 18 37
+# Line 19: var
+VAR var 19 1
+# Line 20: result: integer;
+ID result 20 3
+COLON : 20 9
+INTEGER integer 20 11
+SEMICOLON ; 20 18
+# Line 21: begin
+BEGIN begin 21 1
+# Line 22: end;
+END end 22 1
+SEMICOLON ; 22 4
+# Line 23: (empty)
+# Line 24: function GetFlag(var s: char; n: integer): boolean;
+FUNCTION function 24 1
+ID GetFlag 24 10
+LPAREN ( 24 17
+VAR var 24 18
+ID s 24 22
+COLON : 24 23
+CHAR char 24 25
+SEMICOLON ; 24 29
+ID n 24 31
+COLON : 24 32
+INTEGER integer 24 34
+RPAREN ) 24 41
+COLON : 24 42
+BOOLEAN boolean 24 44
+SEMICOLON ; 24 51
+# Line 25: const
+CONST const 25 1
+# Line 26: LIMIT = 100;
+ID LIMIT 26 3
+EQ = 26 9
+NUMBER 100 26 11
+SEMICOLON ; 26 14
+# Line 27: begin
+BEGIN begin 27 1
+# Line 28: end;
+END end 28 1
+SEMICOLON ; 28 4
+# Line 29: (empty)
+# Line 30: begin
+BEGIN begin 30 1
+# Line 31: end.
+END end 31 1
+DOT . 31 4
+END_OF_FILE EOF 32 1

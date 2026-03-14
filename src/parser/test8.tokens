@@ -1,0 +1,498 @@
+# Test 8: Procedure call and expression grammar rules (Section 5)
+# Covers: procedure_call (no params, single param, multi params),
+#         expression_list, expression with all relop,
+#         simple_expression with all addop, term with all mulop,
+#         factor (num, variable, parentheses, function call, not, uminus),
+#         operator precedence and associativity
+# Source:
+#   program TestExpressions;
+#   var
+#     a, b, c: integer;
+#     x, y: real;
+#     flag1, flag2: boolean;
+#
+#   function Max(m, n: integer): integer;
+#   begin
+#     Max := m
+#   end;
+#
+#   function Min(m, n: integer): integer;
+#   begin
+#     Min := n
+#   end;
+#
+#   procedure NoParam;
+#   begin
+#   end;
+#
+#   procedure OneParam(n: integer);
+#   begin
+#   end;
+#
+#   procedure MultiParam(p, q, r: integer);
+#   begin
+#   end;
+#
+#   begin
+#     NoParam;
+#     OneParam(5);
+#     MultiParam(1, 2, 3);
+#     
+#     a := 10;
+#     b := -5;
+#     c := a + b;
+#     c := a - b;
+#     c := a * b;
+#     c := a / b;
+#     c := a div b;
+#     c := a mod b;
+#     
+#     x := 3.14;
+#     y := -x;
+#     
+#     flag1 := not flag2;
+#     flag1 := a and b;
+#     flag1 := a or b;
+#     
+#     flag1 := a = b;
+#     flag1 := a <> b;
+#     flag1 := a < b;
+#     flag1 := a <= b;
+#     flag1 := a > b;
+#     flag1 := a >= b;
+#     
+#     c := (a + b) * c;
+#     c := a + (b * c);
+#     c := ((a + b) * (c - a)) / (b + 1);
+#     
+#     c := Max(a, b);
+#     c := Max(a + 1, b - 1);
+#     c := Max(Max(a, b), Min(b, c));
+#     
+#     c := -a + b;
+#     c := -(a + b);
+#     flag1 := not (a > b);
+#     
+#     c := a + b - c * a / b + (a mod b) - (a div c)
+#   end.
+#
+# Line 1: program TestExpressions;
+PROGRAM program 1 1
+ID TestExpressions 1 9
+SEMICOLON ; 1 24
+# Line 2: var
+VAR var 2 1
+# Line 3: a, b, c: integer;
+ID a 3 3
+COMMA , 3 4
+ID b 3 6
+COMMA , 3 7
+ID c 3 9
+COLON : 3 10
+INTEGER integer 3 12
+SEMICOLON ; 3 19
+# Line 4: x, y: real;
+ID x 4 3
+COMMA , 4 4
+ID y 4 6
+COLON : 4 7
+REAL real 4 9
+SEMICOLON ; 4 13
+# Line 5: flag1, flag2: boolean;
+ID flag1 5 3
+COMMA , 5 8
+ID flag2 5 10
+COLON : 5 15
+BOOLEAN boolean 5 17
+SEMICOLON ; 5 24
+# Line 6: (empty)
+# Line 7: function Max(m, n: integer): integer;
+FUNCTION function 7 1
+ID Max 7 10
+LPAREN ( 7 13
+ID m 7 14
+COMMA , 7 15
+ID n 7 17
+COLON : 7 18
+INTEGER integer 7 20
+RPAREN ) 7 27
+COLON : 7 28
+INTEGER integer 7 30
+SEMICOLON ; 7 37
+# Line 8: begin
+BEGIN begin 8 1
+# Line 9: Max := m
+ID Max 9 3
+ASSIGN := 9 7
+ID m 9 10
+# Line 10: end;
+END end 10 1
+SEMICOLON ; 10 4
+# Line 11: (empty)
+# Line 12: function Min(m, n: integer): integer;
+FUNCTION function 12 1
+ID Min 12 10
+LPAREN ( 12 13
+ID m 12 14
+COMMA , 12 15
+ID n 12 17
+COLON : 12 18
+INTEGER integer 12 20
+RPAREN ) 12 27
+COLON : 12 28
+INTEGER integer 12 30
+SEMICOLON ; 12 37
+# Line 13: begin
+BEGIN begin 13 1
+# Line 14: Min := n
+ID Min 14 3
+ASSIGN := 14 7
+ID n 14 10
+# Line 15: end;
+END end 15 1
+SEMICOLON ; 15 4
+# Line 16: (empty)
+# Line 17: procedure NoParam;
+PROCEDURE procedure 17 1
+ID NoParam 17 11
+SEMICOLON ; 17 18
+# Line 18: begin
+BEGIN begin 18 1
+# Line 19: end;
+END end 19 1
+SEMICOLON ; 19 4
+# Line 20: (empty)
+# Line 21: procedure OneParam(n: integer);
+PROCEDURE procedure 21 1
+ID OneParam 21 11
+LPAREN ( 21 19
+ID n 21 20
+COLON : 21 21
+INTEGER integer 21 23
+RPAREN ) 21 30
+SEMICOLON ; 21 31
+# Line 22: begin
+BEGIN begin 22 1
+# Line 23: end;
+END end 23 1
+SEMICOLON ; 23 4
+# Line 24: (empty)
+# Line 25: procedure MultiParam(p, q, r: integer);
+PROCEDURE procedure 25 1
+ID MultiParam 25 11
+LPAREN ( 25 21
+ID p 25 22
+COMMA , 25 23
+ID q 25 25
+COMMA , 25 26
+ID r 25 28
+COLON : 25 29
+INTEGER integer 25 31
+RPAREN ) 25 38
+SEMICOLON ; 25 39
+# Line 26: begin
+BEGIN begin 26 1
+# Line 27: end;
+END end 27 1
+SEMICOLON ; 27 4
+# Line 28: (empty)
+# Line 29: begin
+BEGIN begin 29 1
+# Line 30: NoParam;
+ID NoParam 30 3
+SEMICOLON ; 30 10
+# Line 31: OneParam(5);
+ID OneParam 31 3
+LPAREN ( 31 11
+NUMBER 5 31 12
+RPAREN ) 31 13
+SEMICOLON ; 31 14
+# Line 32: MultiParam(1, 2, 3);
+ID MultiParam 32 3
+LPAREN ( 32 13
+NUMBER 1 32 14
+COMMA , 32 15
+NUMBER 2 32 17
+COMMA , 32 18
+NUMBER 3 32 20
+RPAREN ) 32 21
+SEMICOLON ; 32 22
+# Line 33: (empty)
+# Line 34: a := 10;
+ID a 34 3
+ASSIGN := 34 5
+NUMBER 10 34 8
+SEMICOLON ; 34 10
+# Line 35: b := -5;
+ID b 35 3
+ASSIGN := 35 5
+MINUS - 35 8
+NUMBER 5 35 9
+SEMICOLON ; 35 10
+# Line 36: c := a + b;
+ID c 36 3
+ASSIGN := 36 5
+ID a 36 8
+PLUS + 36 10
+ID b 36 12
+SEMICOLON ; 36 13
+# Line 37: c := a - b;
+ID c 37 3
+ASSIGN := 37 5
+ID a 37 8
+MINUS - 37 10
+ID b 37 12
+SEMICOLON ; 37 13
+# Line 38: c := a * b;
+ID c 38 3
+ASSIGN := 38 5
+ID a 38 8
+MULTIPLY * 38 10
+ID b 38 12
+SEMICOLON ; 38 13
+# Line 39: c := a / b;
+ID c 39 3
+ASSIGN := 39 5
+ID a 39 8
+DIVIDE / 39 10
+ID b 39 12
+SEMICOLON ; 39 13
+# Line 40: c := a div b;
+ID c 40 3
+ASSIGN := 40 5
+ID a 40 8
+DIV div 40 10
+ID b 40 14
+SEMICOLON ; 40 15
+# Line 41: c := a mod b;
+ID c 41 3
+ASSIGN := 41 5
+ID a 41 8
+MOD mod 41 10
+ID b 41 14
+SEMICOLON ; 41 15
+# Line 42: (empty)
+# Line 43: x := 3.14;
+ID x 43 3
+ASSIGN := 43 5
+NUMBER 3.14 43 8
+SEMICOLON ; 43 12
+# Line 44: y := -x;
+ID y 44 3
+ASSIGN := 44 5
+MINUS - 44 8
+ID x 44 9
+SEMICOLON ; 44 10
+# Line 45: (empty)
+# Line 46: flag1 := not flag2;
+ID flag1 46 3
+ASSIGN := 46 9
+NOT not 46 12
+ID flag2 46 16
+SEMICOLON ; 46 21
+# Line 47: flag1 := a and b;
+ID flag1 47 3
+ASSIGN := 47 9
+ID a 47 12
+AND and 47 14
+ID b 47 18
+SEMICOLON ; 47 19
+# Line 48: flag1 := a or b;
+ID flag1 48 3
+ASSIGN := 48 9
+ID a 48 12
+OR or 48 14
+ID b 48 17
+SEMICOLON ; 48 18
+# Line 49: (empty)
+# Line 50: flag1 := a = b;
+ID flag1 50 3
+ASSIGN := 50 9
+ID a 50 12
+EQ = 50 14
+ID b 50 16
+SEMICOLON ; 50 17
+# Line 51: flag1 := a <> b;
+ID flag1 51 3
+ASSIGN := 51 9
+ID a 51 12
+NE <> 51 14
+ID b 51 17
+SEMICOLON ; 51 18
+# Line 52: flag1 := a < b;
+ID flag1 52 3
+ASSIGN := 52 9
+ID a 52 12
+LT < 52 14
+ID b 52 16
+SEMICOLON ; 52 17
+# Line 53: flag1 := a <= b;
+ID flag1 53 3
+ASSIGN := 53 9
+ID a 53 12
+LE <= 53 14
+ID b 53 17
+SEMICOLON ; 53 18
+# Line 54: flag1 := a > b;
+ID flag1 54 3
+ASSIGN := 54 9
+ID a 54 12
+GT > 54 14
+ID b 54 16
+SEMICOLON ; 54 17
+# Line 55: flag1 := a >= b;
+ID flag1 55 3
+ASSIGN := 55 9
+ID a 55 12
+GE >= 55 14
+ID b 55 17
+SEMICOLON ; 55 18
+# Line 56: (empty)
+# Line 57: c := (a + b) * c;
+ID c 57 3
+ASSIGN := 57 5
+LPAREN ( 57 8
+ID a 57 9
+PLUS + 57 11
+ID b 57 13
+RPAREN ) 57 14
+MULTIPLY * 57 16
+ID c 57 18
+SEMICOLON ; 57 19
+# Line 58: c := a + (b * c);
+ID c 58 3
+ASSIGN := 58 5
+ID a 58 8
+PLUS + 58 10
+LPAREN ( 58 12
+ID b 58 13
+MULTIPLY * 58 15
+ID c 58 17
+RPAREN ) 58 18
+SEMICOLON ; 58 19
+# Line 59: c := ((a + b) * (c - a)) / (b + 1);
+ID c 59 3
+ASSIGN := 59 5
+LPAREN ( 59 8
+LPAREN ( 59 9
+ID a 59 10
+PLUS + 59 12
+ID b 59 14
+RPAREN ) 59 15
+MULTIPLY * 59 17
+LPAREN ( 59 19
+ID c 59 20
+MINUS - 59 22
+ID a 59 24
+RPAREN ) 59 25
+RPAREN ) 59 26
+DIVIDE / 59 28
+LPAREN ( 59 30
+ID b 59 31
+PLUS + 59 33
+NUMBER 1 59 35
+RPAREN ) 59 36
+SEMICOLON ; 59 37
+# Line 60: (empty)
+# Line 61: c := Max(a, b);
+ID c 61 3
+ASSIGN := 61 5
+ID Max 61 8
+LPAREN ( 61 11
+ID a 61 12
+COMMA , 61 13
+ID b 61 15
+RPAREN ) 61 16
+SEMICOLON ; 61 17
+# Line 62: c := Max(a + 1, b - 1);
+ID c 62 3
+ASSIGN := 62 5
+ID Max 62 8
+LPAREN ( 62 11
+ID a 62 12
+PLUS + 62 14
+NUMBER 1 62 16
+COMMA , 62 17
+ID b 62 19
+MINUS - 62 21
+NUMBER 1 62 23
+RPAREN ) 62 24
+SEMICOLON ; 62 25
+# Line 63: c := Max(Max(a, b), Min(b, c));
+ID c 63 3
+ASSIGN := 63 5
+ID Max 63 8
+LPAREN ( 63 11
+ID Max 63 12
+LPAREN ( 63 15
+ID a 63 16
+COMMA , 63 17
+ID b 63 19
+RPAREN ) 63 20
+COMMA , 63 21
+ID Min 63 23
+LPAREN ( 63 26
+ID b 63 27
+COMMA , 63 28
+ID c 63 30
+RPAREN ) 63 31
+RPAREN ) 63 32
+SEMICOLON ; 63 33
+# Line 64: (empty)
+# Line 65: c := -a + b;
+ID c 65 3
+ASSIGN := 65 5
+MINUS - 65 8
+ID a 65 9
+PLUS + 65 11
+ID b 65 13
+SEMICOLON ; 65 14
+# Line 66: c := -(a + b);
+ID c 66 3
+ASSIGN := 66 5
+MINUS - 66 8
+LPAREN ( 66 9
+ID a 66 10
+PLUS + 66 12
+ID b 66 14
+RPAREN ) 66 15
+SEMICOLON ; 66 16
+# Line 67: flag1 := not (a > b);
+ID flag1 67 3
+ASSIGN := 67 9
+NOT not 67 12
+LPAREN ( 67 16
+ID a 67 17
+GT > 67 19
+ID b 67 21
+RPAREN ) 67 22
+SEMICOLON ; 67 23
+# Line 68: (empty)
+# Line 69: c := a + b - c * a / b + (a mod b) - (a div c)
+ID c 69 3
+ASSIGN := 69 5
+ID a 69 8
+PLUS + 69 10
+ID b 69 12
+MINUS - 69 14
+ID c 69 16
+MULTIPLY * 69 18
+ID a 69 20
+DIVIDE / 69 22
+ID b 69 24
+PLUS + 69 26
+LPAREN ( 69 28
+ID a 69 29
+MOD mod 69 31
+ID b 69 35
+RPAREN ) 69 36
+MINUS - 69 38
+LPAREN ( 69 40
+ID a 69 41
+DIV div 69 43
+ID c 69 47
+RPAREN ) 69 48
+# Line 70: end.
+END end 70 1
+DOT . 70 4
+END_OF_FILE EOF 71 1

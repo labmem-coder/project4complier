@@ -1,0 +1,573 @@
+# Test 9: Comprehensive test covering ALL 5 grammar sections
+# Covers: All grammar rules from sections 1-5
+#   Section 1: Program structure (program_head with idlist, const_declarations with all const_value forms)
+#   Section 2: Variable and subprogram declarations (all basic_types, arrays, procedures, functions)
+#   Section 3: Subprogram parameters and compound statements (var/value parameters, subprogram_body)
+#   Section 4: Statements and variables (all statement types, variable forms, variable_list)
+#   Section 5: Procedure calls and expressions (all operators, factor forms, expression_list)
+# Source: lines 214-309 in temp.txt
+#
+# Line 1: program ComprehensiveTest(input, output, debug);
+PROGRAM program 1 1
+ID ComprehensiveTest 1 9
+LPAREN ( 1 26
+ID input 1 27
+COMMA , 1 32
+ID output 1 34
+COMMA , 1 40
+ID debug 1 42
+RPAREN ) 1 47
+SEMICOLON ; 1 48
+# Line 2: const
+CONST const 2 1
+# Line 3: MAX_SIZE = 100;
+ID MAX_SIZE 3 3
+EQ = 3 12
+NUMBER 100 3 14
+SEMICOLON ; 3 17
+# Line 4: MIN_VALUE = -50;
+ID MIN_VALUE 4 3
+EQ = 4 13
+MINUS - 4 15
+NUMBER 50 4 16
+SEMICOLON ; 4 18
+# Line 5: PI = +3;
+ID PI 5 3
+EQ = 5 6
+PLUS + 5 8
+NUMBER 3 5 9
+SEMICOLON ; 5 10
+# Line 6: LETTER_A = 'A';
+ID LETTER_A 6 3
+EQ = 6 12
+CHAR_LITERAL 'A' 6 14
+SEMICOLON ; 6 17
+# Line 7: var
+VAR var 7 1
+# Line 8: i, j, k: integer;
+ID i 8 3
+COMMA , 8 4
+ID j 8 6
+COMMA , 8 7
+ID k 8 9
+COLON : 8 10
+INTEGER integer 8 12
+SEMICOLON ; 8 19
+# Line 9: sum, avg: real;
+ID sum 9 3
+COMMA , 9 6
+ID avg 9 8
+COLON : 9 11
+REAL real 9 13
+SEMICOLON ; 9 17
+# Line 10: done, found: boolean;
+ID done 10 3
+COMMA , 10 7
+ID found 10 9
+COLON : 10 14
+BOOLEAN boolean 10 16
+SEMICOLON ; 10 23
+# Line 11: ch: char;
+ID ch 11 3
+COLON : 11 5
+CHAR char 11 7
+SEMICOLON ; 11 11
+# Line 12: numbers: array [1..10] of integer;
+ID numbers 12 3
+COLON : 12 10
+ARRAY array 12 12
+LBRACKET [ 12 18
+NUMBER 1 12 19
+DOTDOT .. 12 20
+NUMBER 10 12 22
+RBRACKET ] 12 24
+OF of 12 26
+INTEGER integer 12 29
+SEMICOLON ; 12 36
+# Line 13: matrix: array [1..3, 1..3] of real;
+ID matrix 13 3
+COLON : 13 9
+ARRAY array 13 11
+LBRACKET [ 13 17
+NUMBER 1 13 18
+DOTDOT .. 13 19
+NUMBER 3 13 21
+COMMA , 13 22
+NUMBER 1 13 24
+DOTDOT .. 13 25
+NUMBER 3 13 27
+RBRACKET ] 13 28
+OF of 13 30
+REAL real 13 33
+SEMICOLON ; 13 37
+# Line 14: (empty)
+# Line 15: function Add(a, b: integer): integer;
+FUNCTION function 15 1
+ID Add 15 10
+LPAREN ( 15 13
+ID a 15 14
+COMMA , 15 15
+ID b 15 17
+COLON : 15 18
+INTEGER integer 15 20
+RPAREN ) 15 27
+COLON : 15 28
+INTEGER integer 15 30
+SEMICOLON ; 15 37
+# Line 16: begin
+BEGIN begin 16 1
+# Line 17: Add := a + b
+ID Add 17 3
+ASSIGN := 17 7
+ID a 17 10
+PLUS + 17 12
+ID b 17 14
+# Line 18: end;
+END end 18 1
+SEMICOLON ; 18 4
+# Line 19: (empty)
+# Line 20: function Multiply(x, y: real): real;
+FUNCTION function 20 1
+ID Multiply 20 10
+LPAREN ( 20 18
+ID x 20 19
+COMMA , 20 20
+ID y 20 22
+COLON : 20 23
+REAL real 20 25
+RPAREN ) 20 29
+COLON : 20 30
+REAL real 20 32
+SEMICOLON ; 20 36
+# Line 21: begin
+BEGIN begin 21 1
+# Line 22: Multiply := x * y
+ID Multiply 22 3
+ASSIGN := 22 12
+ID x 22 15
+MULTIPLY * 22 17
+ID y 22 19
+# Line 23: end;
+END end 23 1
+SEMICOLON ; 23 4
+# Line 24: (empty)
+# Line 25: procedure Swap(var x, y: integer);
+PROCEDURE procedure 25 1
+ID Swap 25 11
+LPAREN ( 25 15
+VAR var 25 16
+ID x 25 20
+COMMA , 25 21
+ID y 25 23
+COLON : 25 24
+INTEGER integer 25 26
+RPAREN ) 25 33
+SEMICOLON ; 25 34
+# Line 26: var
+VAR var 26 1
+# Line 27: temp: integer;
+ID temp 27 3
+COLON : 27 7
+INTEGER integer 27 9
+SEMICOLON ; 27 16
+# Line 28: begin
+BEGIN begin 28 1
+# Line 29: temp := x;
+ID temp 29 3
+ASSIGN := 29 8
+ID x 29 11
+SEMICOLON ; 29 12
+# Line 30: x := y;
+ID x 30 3
+ASSIGN := 30 5
+ID y 30 8
+SEMICOLON ; 30 9
+# Line 31: y := temp
+ID y 31 3
+ASSIGN := 31 5
+ID temp 31 8
+# Line 32: end;
+END end 32 1
+SEMICOLON ; 32 4
+# Line 33: (empty)
+# Line 34: procedure PrintArray(n: integer);
+PROCEDURE procedure 34 1
+ID PrintArray 34 11
+LPAREN ( 34 21
+ID n 34 22
+COLON : 34 23
+INTEGER integer 34 25
+RPAREN ) 34 32
+SEMICOLON ; 34 33
+# Line 35: var
+VAR var 35 1
+# Line 36: idx: integer;
+ID idx 36 3
+COLON : 36 6
+INTEGER integer 36 8
+SEMICOLON ; 36 15
+# Line 37: begin
+BEGIN begin 37 1
+# Line 38: for idx := 1 to n do
+FOR for 38 3
+ID idx 38 7
+ASSIGN := 38 11
+NUMBER 1 38 14
+TO to 38 16
+ID n 38 19
+DO do 38 21
+# Line 39: write(arr[idx])
+WRITE write 39 5
+LPAREN ( 39 10
+ID arr 39 11
+LBRACKET [ 39 14
+ID idx 39 15
+RBRACKET ] 39 18
+RPAREN ) 39 19
+# Line 40: end;
+END end 40 1
+SEMICOLON ; 40 4
+# Line 41: (empty)
+# Line 42: function Factorial(n: integer): integer;
+FUNCTION function 42 1
+ID Factorial 42 10
+LPAREN ( 42 19
+ID n 42 20
+COLON : 42 21
+INTEGER integer 42 23
+RPAREN ) 42 30
+COLON : 42 31
+INTEGER integer 42 33
+SEMICOLON ; 42 40
+# Line 43: var
+VAR var 43 1
+# Line 44: result: integer;
+ID result 44 3
+COLON : 44 9
+INTEGER integer 44 11
+SEMICOLON ; 44 18
+# Line 45: begin
+BEGIN begin 45 1
+# Line 46: if n <= 1 then
+IF if 46 3
+ID n 46 6
+LE <= 46 8
+NUMBER 1 46 11
+THEN then 46 13
+# Line 47: result := 1
+ID result 47 5
+ASSIGN := 47 12
+NUMBER 1 47 15
+# Line 48: else
+ELSE else 48 3
+# Line 49: result := n * Factorial(n - 1);
+ID result 49 5
+ASSIGN := 49 12
+ID n 49 15
+MULTIPLY * 49 17
+ID Factorial 49 19
+LPAREN ( 49 28
+ID n 49 29
+MINUS - 49 31
+NUMBER 1 49 33
+RPAREN ) 49 34
+SEMICOLON ; 49 35
+# Line 50: Factorial := result
+ID Factorial 50 3
+ASSIGN := 50 13
+ID result 50 16
+# Line 51: end;
+END end 51 1
+SEMICOLON ; 51 4
+# Line 52: (empty)
+# Line 53: begin
+BEGIN begin 53 1
+# Line 54: i := 0;
+ID i 54 3
+ASSIGN := 54 5
+NUMBER 0 54 8
+SEMICOLON ; 54 9
+# Line 55: sum := 0.0;
+ID sum 55 3
+ASSIGN := 55 7
+NUMBER 0.0 55 10
+SEMICOLON ; 55 13
+# Line 56: done := not found;
+ID done 56 3
+ASSIGN := 56 8
+NOT not 56 11
+ID found 56 15
+SEMICOLON ; 56 20
+# Line 57: (empty)
+# Line 58: read(i, j);
+READ read 58 3
+LPAREN ( 58 7
+ID i 58 8
+COMMA , 58 9
+ID j 58 11
+RPAREN ) 58 12
+SEMICOLON ; 58 13
+# Line 59: k := Add(i, j);
+ID k 59 3
+ASSIGN := 59 5
+ID Add 59 8
+LPAREN ( 59 11
+ID i 59 12
+COMMA , 59 13
+ID j 59 15
+RPAREN ) 59 16
+SEMICOLON ; 59 17
+# Line 60: write(k);
+WRITE write 60 3
+LPAREN ( 60 8
+ID k 60 9
+RPAREN ) 60 10
+SEMICOLON ; 60 11
+# Line 61: (empty)
+# Line 62: numbers[1] := 10;
+ID numbers 62 3
+LBRACKET [ 62 10
+NUMBER 1 62 11
+RBRACKET ] 62 12
+ASSIGN := 62 14
+NUMBER 10 62 17
+SEMICOLON ; 62 19
+# Line 63: numbers[2] := -5;
+ID numbers 63 3
+LBRACKET [ 63 10
+NUMBER 2 63 11
+RBRACKET ] 63 12
+ASSIGN := 63 14
+MINUS - 63 17
+NUMBER 5 63 18
+SEMICOLON ; 63 19
+# Line 64: matrix[1, 1] := 3.14;
+ID matrix 64 3
+LBRACKET [ 64 9
+NUMBER 1 64 10
+COMMA , 64 11
+NUMBER 1 64 13
+RBRACKET ] 64 14
+ASSIGN := 64 16
+NUMBER 3.14 64 19
+SEMICOLON ; 64 23
+# Line 65: (empty)
+# Line 66: Swap(i, j);
+ID Swap 66 3
+LPAREN ( 66 7
+ID i 66 8
+COMMA , 66 9
+ID j 66 11
+RPAREN ) 66 12
+SEMICOLON ; 66 13
+# Line 67: (empty)
+# Line 68: if i > j then
+IF if 68 3
+ID i 68 6
+GT > 68 8
+ID j 68 10
+THEN then 68 12
+# Line 69: k := i
+ID k 69 5
+ASSIGN := 69 7
+ID i 69 10
+# Line 70: else
+ELSE else 70 3
+# Line 71: k := j;
+ID k 71 5
+ASSIGN := 71 7
+ID j 71 10
+SEMICOLON ; 71 11
+# Line 72: (empty)
+# Line 73: for i := 1 to 10 do
+FOR for 73 3
+ID i 73 7
+ASSIGN := 73 9
+NUMBER 1 73 12
+TO to 73 14
+NUMBER 10 73 17
+DO do 73 20
+# Line 74: begin
+BEGIN begin 74 3
+# Line 75: numbers[i] := i * 2;
+ID numbers 75 5
+LBRACKET [ 75 12
+ID i 75 13
+RBRACKET ] 75 14
+ASSIGN := 75 16
+ID i 75 19
+MULTIPLY * 75 21
+NUMBER 2 75 23
+SEMICOLON ; 75 24
+# Line 76: sum := sum + numbers[i]
+ID sum 76 5
+ASSIGN := 76 9
+ID sum 76 12
+PLUS + 76 16
+ID numbers 76 18
+LBRACKET [ 76 25
+ID i 76 26
+RBRACKET ] 76 27
+# Line 77: end;
+END end 77 3
+SEMICOLON ; 77 6
+# Line 78: (empty)
+# Line 79: avg := sum / 10;
+ID avg 79 3
+ASSIGN := 79 7
+ID sum 79 10
+DIVIDE / 79 14
+NUMBER 10 79 16
+SEMICOLON ; 79 18
+# Line 80: (empty)
+# Line 81: k := (i + j) * k - (i div j) + (i mod j);
+ID k 81 3
+ASSIGN := 81 5
+LPAREN ( 81 8
+ID i 81 9
+PLUS + 81 11
+ID j 81 13
+RPAREN ) 81 14
+MULTIPLY * 81 16
+ID k 81 18
+MINUS - 81 20
+LPAREN ( 81 22
+ID i 81 23
+DIV div 81 25
+ID j 81 29
+RPAREN ) 81 30
+PLUS + 81 32
+LPAREN ( 81 34
+ID i 81 35
+MOD mod 81 37
+ID j 81 41
+RPAREN ) 81 42
+SEMICOLON ; 81 43
+# Line 82: done := (i = j) or (i <> j) and (i < j) or (i <= j) or (i > j) or (i >= j);
+ID done 82 3
+ASSIGN := 82 8
+LPAREN ( 82 11
+ID i 82 12
+EQ = 82 14
+ID j 82 16
+RPAREN ) 82 17
+OR or 82 19
+LPAREN ( 82 22
+ID i 82 23
+NE <> 82 25
+ID j 82 28
+RPAREN ) 82 29
+AND and 82 31
+LPAREN ( 82 35
+ID i 82 36
+LT < 82 38
+ID j 82 40
+RPAREN ) 82 41
+OR or 82 43
+LPAREN ( 82 46
+ID i 82 47
+LE <= 82 49
+ID j 82 52
+RPAREN ) 82 53
+OR or 82 55
+LPAREN ( 82 58
+ID i 82 59
+GT > 82 61
+ID j 82 63
+RPAREN ) 82 64
+OR or 82 66
+LPAREN ( 82 69
+ID i 82 70
+GE >= 82 72
+ID j 82 75
+RPAREN ) 82 76
+SEMICOLON ; 82 77
+# Line 83: (empty)
+# Line 84: k := Factorial(5);
+ID k 84 3
+ASSIGN := 84 5
+ID Factorial 84 8
+LPAREN ( 84 17
+NUMBER 5 84 18
+RPAREN ) 84 19
+SEMICOLON ; 84 20
+# Line 85: sum := Multiply(3.14, 2.0);
+ID sum 85 3
+ASSIGN := 85 7
+ID Multiply 85 10
+LPAREN ( 85 18
+NUMBER 3.14 85 19
+COMMA , 85 23
+NUMBER 2.0 85 25
+RPAREN ) 85 28
+SEMICOLON ; 85 29
+# Line 86: (empty)
+# Line 87: PrintArray(10);
+ID PrintArray 87 3
+LPAREN ( 87 13
+NUMBER 10 87 14
+RPAREN ) 87 16
+SEMICOLON ; 87 17
+# Line 88: (empty)
+# Line 89: begin
+BEGIN begin 89 3
+# Line 90: i := i + 1;
+ID i 90 5
+ASSIGN := 90 7
+ID i 90 10
+PLUS + 90 12
+NUMBER 1 90 14
+SEMICOLON ; 90 15
+# Line 91: j := j - 1;
+ID j 91 5
+ASSIGN := 91 7
+ID j 91 10
+MINUS - 91 12
+NUMBER 1 91 14
+SEMICOLON ; 91 15
+# Line 92: k := not done and found or (i >= j)
+ID k 92 5
+ASSIGN := 92 7
+NOT not 92 10
+ID done 92 14
+AND and 92 19
+ID found 92 23
+OR or 92 29
+LPAREN ( 92 32
+ID i 92 33
+GE >= 92 35
+ID j 92 38
+RPAREN ) 92 39
+# Line 93: end;
+END end 93 3
+SEMICOLON ; 93 6
+# Line 94: (empty)
+# Line 95: write(i, j, k, sum, avg, numbers[5], matrix[2, 2])
+WRITE write 95 3
+LPAREN ( 95 8
+ID i 95 9
+COMMA , 95 10
+ID j 95 12
+COMMA , 95 13
+ID k 95 15
+COMMA , 95 16
+ID sum 95 18
+COMMA , 95 21
+ID avg 95 23
+COMMA , 95 26
+ID numbers 95 28
+LBRACKET [ 95 35
+NUMBER 5 95 36
+RBRACKET ] 95 37
+COMMA , 95 38
+ID matrix 95 40
+LBRACKET [ 95 46
+NUMBER 2 95 47
+COMMA , 95 48
+NUMBER 2 95 50
+RBRACKET ] 95 51
+RPAREN ) 95 52
+# Line 96: end.
+END end 96 1
+DOT . 96 4
+END_OF_FILE EOF 97 1

@@ -83,13 +83,16 @@ std::shared_ptr<ProgramHeadNode> Parser::parse_program_head() {
 std::vector<std::string> Parser::parse_idlist() {
     std::vector<std::string> ids;
     ids.push_back(expect(TokenType::ID).value);
-    
-    while (match(TokenType::COMMA)) {
+    parse_idlist_prime(ids);
+    return ids;
+}
+
+void Parser::parse_idlist_prime(std::vector<std::string>& ids) {
+    if (match(TokenType::COMMA)) {
         advance();
         ids.push_back(expect(TokenType::ID).value);
+        parse_idlist_prime(ids);
     }
-    
-    return ids;
 }
 
 std::shared_ptr<ProgramBodyNode> Parser::parse_program_body() {
@@ -109,6 +112,7 @@ std::shared_ptr<ConstDeclarationsNode> Parser::parse_const_declarations() {
     
     auto decls = std::make_shared<ConstDeclarationsNode>();
     decls->declarations.push_back(parse_const_declaration());
+    parse_const_declaration_prime(decls);
     expect(TokenType::SEMICOLON);
     
     return decls;
@@ -116,23 +120,21 @@ std::shared_ptr<ConstDeclarationsNode> Parser::parse_const_declarations() {
 
 std::shared_ptr<ConstDeclarationNode> Parser::parse_const_declaration() {
     std::string name = expect(TokenType::ID).value;
-    expect(TokenType::ASSIGN);
+    expect(TokenType::EQ);
     std::pair<std::string, std::string> const_val = parse_const_value();
     auto decl = std::make_shared<ConstDeclarationNode>(name, const_val.first, const_val.second);
-    
-    while (match(TokenType::SEMICOLON)) {
+    return decl;
+}
+
+void Parser::parse_const_declaration_prime(std::shared_ptr<ConstDeclarationsNode> decls) {
+    if (match(TokenType::SEMICOLON)) {
         Token next = peek();
         if (next.type == TokenType::ID) {
             advance();
-            name = expect(TokenType::ID).value;
-            expect(TokenType::ASSIGN);
-            std::pair<std::string, std::string> val_pair = parse_const_value();
-        } else {
-            break;
+            decls->declarations.push_back(parse_const_declaration());
+            parse_const_declaration_prime(decls);
         }
     }
-    
-    return decl;
 }
 
 std::pair<std::string, std::string> Parser::parse_const_value() {
@@ -182,24 +184,27 @@ std::vector<std::shared_ptr<VarDeclarationNode>> Parser::parse_var_declaration()
     decl->var_type = type;
     declarations.push_back(decl);
     
-    while (match(TokenType::SEMICOLON)) {
+    parse_var_declaration_prime(declarations);
+    return declarations;
+}
+
+void Parser::parse_var_declaration_prime(std::vector<std::shared_ptr<VarDeclarationNode>>& declarations) {
+    if (match(TokenType::SEMICOLON)) {
         Token next = peek();
         if (next.type == TokenType::ID) {
             advance();
-            ids = parse_idlist();
+            auto ids = parse_idlist();
             expect(TokenType::COLON);
-            type = parse_type();
+            auto type = parse_type();
             
-            decl = std::make_shared<VarDeclarationNode>();
+            auto decl = std::make_shared<VarDeclarationNode>();
             decl->identifiers = ids;
             decl->var_type = type;
             declarations.push_back(decl);
-        } else {
-            break;
+            
+            parse_var_declaration_prime(declarations);
         }
     }
-    
-    return declarations;
 }
 
 std::shared_ptr<TypeNode> Parser::parse_type() {
@@ -238,32 +243,37 @@ std::vector<std::shared_ptr<PeriodNode>> Parser::parse_period() {
     int end = std::stoi(expect(TokenType::NUMBER).value);
     periods.push_back(std::make_shared<PeriodNode>(start, end));
     
-    while (match(TokenType::COMMA)) {
-        advance();
-        start = std::stoi(expect(TokenType::NUMBER).value);
-        expect(TokenType::DOTDOT);
-        end = std::stoi(expect(TokenType::NUMBER).value);
-        periods.push_back(std::make_shared<PeriodNode>(start, end));
-    }
-    
+    parse_period_prime(periods);
     return periods;
 }
 
-std::shared_ptr<SubprogramDeclarationsNode> Parser::parse_subprogram_declarations() {
-    std::vector<std::shared_ptr<SubprogramNode>> subprograms;
-    
-    while (match(TokenType::PROCEDURE, TokenType::FUNCTION)) {
-        subprograms.push_back(parse_subprogram());
-        expect(TokenType::SEMICOLON);
+void Parser::parse_period_prime(std::vector<std::shared_ptr<PeriodNode>>& periods) {
+    if (match(TokenType::COMMA)) {
+        advance();
+        int start = std::stoi(expect(TokenType::NUMBER).value);
+        expect(TokenType::DOTDOT);
+        int end = std::stoi(expect(TokenType::NUMBER).value);
+        periods.push_back(std::make_shared<PeriodNode>(start, end));
+        parse_period_prime(periods);
     }
+}
+
+std::shared_ptr<SubprogramDeclarationsNode> Parser::parse_subprogram_declarations() {
+    auto decls = std::make_shared<SubprogramDeclarationsNode>();
+    parse_subprogram_declarations_prime(decls);
     
-    if (subprograms.empty()) {
+    if (decls->subprograms.empty()) {
         return nullptr;
     }
-    
-    auto decls = std::make_shared<SubprogramDeclarationsNode>();
-    decls->subprograms = subprograms;
     return decls;
+}
+
+void Parser::parse_subprogram_declarations_prime(std::shared_ptr<SubprogramDeclarationsNode> decls) {
+    if (match(TokenType::PROCEDURE, TokenType::FUNCTION)) {
+        decls->subprograms.push_back(parse_subprogram());
+        expect(TokenType::SEMICOLON);
+        parse_subprogram_declarations_prime(decls);
+    }
 }
 
 std::shared_ptr<SubprogramNode> Parser::parse_subprogram() {
@@ -312,13 +322,16 @@ std::shared_ptr<ParameterListNode> Parser::parse_formal_parameter() {
 std::shared_ptr<ParameterListNode> Parser::parse_parameter_list() {
     auto param_list = std::make_shared<ParameterListNode>();
     param_list->parameters.push_back(parse_parameter());
-    
-    while (match(TokenType::SEMICOLON)) {
+    parse_parameter_list_prime(param_list);
+    return param_list;
+}
+
+void Parser::parse_parameter_list_prime(std::shared_ptr<ParameterListNode> param_list) {
+    if (match(TokenType::SEMICOLON)) {
         advance();
         param_list->parameters.push_back(parse_parameter());
+        parse_parameter_list_prime(param_list);
     }
-    
-    return param_list;
 }
 
 std::shared_ptr<ParameterNode> Parser::parse_parameter() {
@@ -355,16 +368,18 @@ std::shared_ptr<CompoundStatementNode> Parser::parse_compound_statement() {
 std::vector<std::shared_ptr<StatementNode>> Parser::parse_statement_list() {
     std::vector<std::shared_ptr<StatementNode>> statements;
     statements.push_back(parse_statement());
-    
-    while (match(TokenType::SEMICOLON)) {
-        advance();
-        if (match(TokenType::END)) {
-            break;
-        }
-        statements.push_back(parse_statement());
-    }
-    
+    parse_statement_list_prime(statements);
     return statements;
+}
+
+void Parser::parse_statement_list_prime(std::vector<std::shared_ptr<StatementNode>>& statements) {
+    if (match(TokenType::SEMICOLON)) {
+        advance();
+        if (!match(TokenType::END)) {
+            statements.push_back(parse_statement());
+            parse_statement_list_prime(statements);
+        }
+    }
 }
 
 std::shared_ptr<StatementNode> Parser::parse_statement() {
@@ -466,13 +481,16 @@ std::shared_ptr<WriteNode> Parser::parse_write_statement() {
 std::vector<std::shared_ptr<VariableNode>> Parser::parse_variable_list() {
     std::vector<std::shared_ptr<VariableNode>> variables;
     variables.push_back(parse_variable());
-    
-    while (match(TokenType::COMMA)) {
+    parse_variable_list_prime(variables);
+    return variables;
+}
+
+void Parser::parse_variable_list_prime(std::vector<std::shared_ptr<VariableNode>>& variables) {
+    if (match(TokenType::COMMA)) {
         advance();
         variables.push_back(parse_variable());
+        parse_variable_list_prime(variables);
     }
-    
-    return variables;
 }
 
 std::shared_ptr<VariableNode> Parser::parse_variable() {
@@ -491,18 +509,24 @@ std::shared_ptr<VariableNode> Parser::parse_variable() {
 std::vector<std::shared_ptr<ExpressionNode>> Parser::parse_expression_list() {
     std::vector<std::shared_ptr<ExpressionNode>> expressions;
     expressions.push_back(parse_expression());
-    
-    while (match(TokenType::COMMA)) {
+    parse_expression_list_prime(expressions);
+    return expressions;
+}
+
+void Parser::parse_expression_list_prime(std::vector<std::shared_ptr<ExpressionNode>>& expressions) {
+    if (match(TokenType::COMMA)) {
         advance();
         expressions.push_back(parse_expression());
+        parse_expression_list_prime(expressions);
     }
-    
-    return expressions;
 }
 
 std::shared_ptr<ExpressionNode> Parser::parse_expression() {
     auto left = parse_simple_expression();
-    
+    return parse_expression_prime(left);
+}
+
+std::shared_ptr<ExpressionNode> Parser::parse_expression_prime(std::shared_ptr<ExpressionNode> left) {
     if (match(TokenType::EQ, TokenType::NE, TokenType::LT, TokenType::LE) ||
         match(TokenType::GT, TokenType::GE)) {
         std::string op = current_token.value;
@@ -510,34 +534,39 @@ std::shared_ptr<ExpressionNode> Parser::parse_expression() {
         auto right = parse_simple_expression();
         return std::make_shared<BinaryOpNode>(op, left, right);
     }
-    
     return left;
 }
 
 std::shared_ptr<ExpressionNode> Parser::parse_simple_expression() {
     auto left = parse_term();
-    
-    while (match(TokenType::PLUS, TokenType::MINUS, TokenType::OR)) {
+    return parse_simple_expression_prime(left);
+}
+
+std::shared_ptr<ExpressionNode> Parser::parse_simple_expression_prime(std::shared_ptr<ExpressionNode> left) {
+    if (match(TokenType::PLUS, TokenType::MINUS, TokenType::OR)) {
         std::string op = current_token.value;
         advance();
         auto right = parse_term();
-        left = std::make_shared<BinaryOpNode>(op, left, right);
+        auto new_left = std::make_shared<BinaryOpNode>(op, left, right);
+        return parse_simple_expression_prime(new_left);
     }
-    
     return left;
 }
 
 std::shared_ptr<ExpressionNode> Parser::parse_term() {
     auto left = parse_factor();
-    
-    while (match(TokenType::MULTIPLY, TokenType::DIVIDE, TokenType::DIV, TokenType::MOD) ||
-           match(TokenType::AND)) {
+    return parse_term_prime(left);
+}
+
+std::shared_ptr<ExpressionNode> Parser::parse_term_prime(std::shared_ptr<ExpressionNode> left) {
+    if (match(TokenType::MULTIPLY, TokenType::DIVIDE, TokenType::DIV, TokenType::MOD) ||
+        match(TokenType::AND)) {
         std::string op = current_token.value;
         advance();
         auto right = parse_factor();
-        left = std::make_shared<BinaryOpNode>(op, left, right);
+        auto new_left = std::make_shared<BinaryOpNode>(op, left, right);
+        return parse_term_prime(new_left);
     }
-    
     return left;
 }
 

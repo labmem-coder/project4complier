@@ -1,0 +1,268 @@
+# Test 7: Statements and variables grammar rules (Section 4)
+# Covers: all statement types (assignment, procedure_call, if, for, read, write, compound),
+#         variable forms (simple variable, array[single], array[multi]),
+#         variable_list, func_id assignment, else_part
+# Source:
+#   program TestStatements;
+#   var
+#     x, y, z: integer;
+#     arr: array [1..5] of integer;
+#     matrix: array [1..2, 1..3] of real;
+#     flag: boolean;
+#
+#   function GetValue: integer;
+#   begin
+#     GetValue := 10
+#   end;
+#
+#   procedure PrintNum(n: integer);
+#   begin
+#   end;
+#
+#   begin
+#     x := 5;
+#     arr[1] := x;
+#     matrix[1, 2] := 3.14;
+#     
+#     GetValue := x + y;
+#     
+#     PrintNum(x);
+#     PrintNum(arr[2]);
+#     
+#     if x > 0 then
+#       y := 1
+#     else
+#       y := 0;
+#     
+#     for z := 1 to 10 do
+#       arr[z] := z;
+#     
+#     read(x, y, arr[3]);
+#     write(x, y, arr[1], matrix[2, 3]);
+#     
+#     begin
+#       x := x + 1;
+#       y := y - 1
+#     end
+#   end.
+#
+# Line 1: program TestStatements;
+PROGRAM program 1 1
+ID TestStatements 1 9
+SEMICOLON ; 1 23
+# Line 2: var
+VAR var 2 1
+# Line 3: x, y, z: integer;
+ID x 3 3
+COMMA , 3 4
+ID y 3 6
+COMMA , 3 7
+ID z 3 9
+COLON : 3 10
+INTEGER integer 3 12
+SEMICOLON ; 3 19
+# Line 4: arr: array [1..5] of integer;
+ID arr 4 3
+COLON : 4 6
+ARRAY array 4 8
+LBRACKET [ 4 14
+NUMBER 1 4 15
+DOTDOT .. 4 16
+NUMBER 5 4 18
+RBRACKET ] 4 19
+OF of 4 21
+INTEGER integer 4 24
+SEMICOLON ; 4 31
+# Line 5: matrix: array [1..2, 1..3] of real;
+ID matrix 5 3
+COLON : 5 9
+ARRAY array 5 11
+LBRACKET [ 5 17
+NUMBER 1 5 18
+DOTDOT .. 5 19
+NUMBER 2 5 21
+COMMA , 5 22
+NUMBER 1 5 24
+DOTDOT .. 5 25
+NUMBER 3 5 27
+RBRACKET ] 5 28
+OF of 5 30
+REAL real 5 33
+SEMICOLON ; 5 37
+# Line 6: flag: boolean;
+ID flag 6 3
+COLON : 6 7
+BOOLEAN boolean 6 9
+SEMICOLON ; 6 16
+# Line 7: (empty)
+# Line 8: function GetValue: integer;
+FUNCTION function 8 1
+ID GetValue 8 10
+COLON : 8 18
+INTEGER integer 8 20
+SEMICOLON ; 8 27
+# Line 9: begin
+BEGIN begin 9 1
+# Line 10: GetValue := 10
+ID GetValue 10 3
+ASSIGN := 10 12
+NUMBER 10 10 15
+# Line 11: end;
+END end 11 1
+SEMICOLON ; 11 4
+# Line 12: (empty)
+# Line 13: procedure PrintNum(n: integer);
+PROCEDURE procedure 13 1
+ID PrintNum 13 11
+LPAREN ( 13 19
+ID n 13 20
+COLON : 13 21
+INTEGER integer 13 23
+RPAREN ) 13 30
+SEMICOLON ; 13 31
+# Line 14: begin
+BEGIN begin 14 1
+# Line 15: end;
+END end 15 1
+SEMICOLON ; 15 4
+# Line 16: (empty)
+# Line 17: begin
+BEGIN begin 17 1
+# Line 18: x := 5;
+ID x 18 3
+ASSIGN := 18 5
+NUMBER 5 18 8
+SEMICOLON ; 18 9
+# Line 19: arr[1] := x;
+ID arr 19 3
+LBRACKET [ 19 6
+NUMBER 1 19 7
+RBRACKET ] 19 8
+ASSIGN := 19 10
+ID x 19 13
+SEMICOLON ; 19 14
+# Line 20: matrix[1, 2] := 3.14;
+ID matrix 20 3
+LBRACKET [ 20 9
+NUMBER 1 20 10
+COMMA , 20 11
+NUMBER 2 20 13
+RBRACKET ] 20 14
+ASSIGN := 20 16
+NUMBER 3.14 20 19
+SEMICOLON ; 20 23
+# Line 21: (empty)
+# Line 22: GetValue := x + y;
+ID GetValue 22 3
+ASSIGN := 22 12
+ID x 22 15
+PLUS + 22 17
+ID y 22 19
+SEMICOLON ; 22 20
+# Line 23: (empty)
+# Line 24: PrintNum(x);
+ID PrintNum 24 3
+LPAREN ( 24 11
+ID x 24 12
+RPAREN ) 24 13
+SEMICOLON ; 24 14
+# Line 25: PrintNum(arr[2]);
+ID PrintNum 25 3
+LPAREN ( 25 11
+ID arr 25 12
+LBRACKET [ 25 15
+NUMBER 2 25 16
+RBRACKET ] 25 17
+RPAREN ) 25 18
+SEMICOLON ; 25 19
+# Line 26: (empty)
+# Line 27: if x > 0 then
+IF if 27 3
+ID x 27 6
+GT > 27 8
+NUMBER 0 27 10
+THEN then 27 12
+# Line 28: y := 1
+ID y 28 5
+ASSIGN := 28 7
+NUMBER 1 28 10
+# Line 29: else
+ELSE else 29 3
+# Line 30: y := 0;
+ID y 30 5
+ASSIGN := 30 7
+NUMBER 0 30 10
+SEMICOLON ; 30 11
+# Line 31: (empty)
+# Line 32: for z := 1 to 10 do
+FOR for 32 3
+ID z 32 7
+ASSIGN := 32 9
+NUMBER 1 32 12
+TO to 32 14
+NUMBER 10 32 17
+DO do 32 20
+# Line 33: arr[z] := z;
+ID arr 33 5
+LBRACKET [ 33 8
+ID z 33 9
+RBRACKET ] 33 10
+ASSIGN := 33 12
+ID z 33 15
+SEMICOLON ; 33 16
+# Line 34: (empty)
+# Line 35: read(x, y, arr[3]);
+READ read 35 3
+LPAREN ( 35 7
+ID x 35 8
+COMMA , 35 9
+ID y 35 11
+COMMA , 35 12
+ID arr 35 14
+LBRACKET [ 35 17
+NUMBER 3 35 18
+RBRACKET ] 35 19
+RPAREN ) 35 20
+SEMICOLON ; 35 21
+# Line 36: write(x, y, arr[1], matrix[2, 3]);
+WRITE write 36 3
+LPAREN ( 36 8
+ID x 36 9
+COMMA , 36 10
+ID y 36 12
+COMMA , 36 13
+ID arr 36 15
+LBRACKET [ 36 18
+NUMBER 1 36 19
+RBRACKET ] 36 20
+COMMA , 36 21
+ID matrix 36 23
+LBRACKET [ 36 29
+NUMBER 2 36 30
+COMMA , 36 31
+NUMBER 3 36 33
+RBRACKET ] 36 34
+RPAREN ) 36 35
+SEMICOLON ; 36 36
+# Line 37: (empty)
+# Line 38: begin
+BEGIN begin 38 3
+# Line 39: x := x + 1;
+ID x 39 5
+ASSIGN := 39 7
+ID x 39 10
+PLUS + 39 12
+NUMBER 1 39 14
+SEMICOLON ; 39 15
+# Line 40: y := y - 1
+ID y 40 5
+ASSIGN := 40 7
+ID y 40 10
+MINUS - 40 12
+NUMBER 1 40 14
+# Line 41: end
+END end 41 3
+# Line 42: end.
+END end 42 1
+DOT . 42 4
+END_OF_FILE EOF 43 1
