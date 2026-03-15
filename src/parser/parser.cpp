@@ -1,7 +1,8 @@
 #include "parser.h"
 #include <sstream>
+#include <iostream> 
 
-Parser::Parser(const std::vector<Token>& toks) : tokens(toks), pos(0) {
+Parser::Parser(const std::vector<Token>& toks) : tokens(toks), pos(0), error_recovery_mode(false) {
     if (!tokens.empty()) {
         current_token = tokens[0];
     }
@@ -26,10 +27,15 @@ Token Parser::peek(int offset) {
 
 Token Parser::expect(TokenType type) {
     if (current_token.type != type) {
-        std::ostringstream oss;
-        oss << "Expected token type " << static_cast<int>(type) 
-            << " but got " << static_cast<int>(current_token.type);
-        throw ParseError(oss.str(), current_token);
+        std::string expected_str = token_type_to_string(type);
+        std::string message = "Expected " + expected_str;
+        report_error(message, expected_str, "Skipped current token");
+        
+        // Skip the unexpected token and continue
+        advance();
+        
+        // Return a dummy token to allow parsing to continue
+        return Token(type, "", current_token.line, current_token.column);
     }
     Token tok = current_token;
     advance();
@@ -51,6 +57,109 @@ bool Parser::match(TokenType type1, TokenType type2, TokenType type3) {
 bool Parser::match(TokenType type1, TokenType type2, TokenType type3, TokenType type4) {
     return current_token.type == type1 || current_token.type == type2 || 
            current_token.type == type3 || current_token.type == type4;
+}
+
+std::string Parser::token_type_to_string(TokenType type) {
+    switch (type) {
+        case TokenType::PROGRAM: return "program";
+        case TokenType::BEGIN: return "begin";
+        case TokenType::END: return "end";
+        case TokenType::CONST: return "const";
+        case TokenType::VAR: return "var";
+        case TokenType::PROCEDURE: return "procedure";
+        case TokenType::FUNCTION: return "function";
+        case TokenType::IF: return "if";
+        case TokenType::THEN: return "then";
+        case TokenType::ELSE: return "else";
+        case TokenType::FOR: return "for";
+        case TokenType::TO: return "to";
+        case TokenType::DO: return "do";
+        case TokenType::READ: return "read";
+        case TokenType::WRITE: return "write";
+        case TokenType::INTEGER: return "integer";
+        case TokenType::REAL: return "real";
+        case TokenType::BOOLEAN: return "boolean";
+        case TokenType::CHAR: return "char";
+        case TokenType::ARRAY: return "array";
+        case TokenType::OF: return "of";
+        case TokenType::ID: return "identifier";
+        case TokenType::NUMBER: return "number";
+        case TokenType::CHAR_LITERAL: return "character literal";
+        case TokenType::PLUS: return "+";
+        case TokenType::MINUS: return "-";
+        case TokenType::MULTIPLY: return "*";
+        case TokenType::DIVIDE: return "/";
+        case TokenType::DIV: return "div";
+        case TokenType::MOD: return "mod";
+        case TokenType::EQ: return "=";
+        case TokenType::NE: return "<>";
+        case TokenType::LT: return "<";
+        case TokenType::LE: return "<=";
+        case TokenType::GT: return ">";
+        case TokenType::GE: return ">=";
+        case TokenType::ASSIGN: return ":=";
+        case TokenType::SEMICOLON: return ";";
+        case TokenType::COLON: return ":";
+        case TokenType::COMMA: return ",";
+        case TokenType::DOT: return ".";
+        case TokenType::DOTDOT: return "..";
+        case TokenType::LPAREN: return "(";
+        case TokenType::RPAREN: return ")";
+        case TokenType::LBRACKET: return "[";
+        case TokenType::RBRACKET: return "]";
+        case TokenType::AND: return "and";
+        case TokenType::OR: return "or";
+        case TokenType::NOT: return "not";
+        case TokenType::END_OF_FILE: return "end of file";
+        default: return "unknown";
+    }
+}
+
+void Parser::report_error(const std::string& message, const std::string& expected, const std::string& recovery) {
+    std::string found = current_token.value.empty() ? 
+        token_type_to_string(current_token.type) : 
+        "'" + current_token.value + "'";
+    
+    errors.emplace_back(
+        current_token.line,
+        current_token.column,
+        message,
+        expected,
+        found,
+        recovery
+    );
+    
+    error_recovery_mode = true;
+}
+
+bool Parser::is_synch_token(const std::set<TokenType>& synch_set) {
+    return synch_set.find(current_token.type) != synch_set.end();
+}
+
+void Parser::skip_to_synch(const std::set<TokenType>& synch_set) {
+    while (current_token.type != TokenType::END_OF_FILE && 
+           !is_synch_token(synch_set)) {
+        advance();
+    }
+    error_recovery_mode = false;
+}
+
+void Parser::print_errors() const {
+    if (errors.empty()) {
+        return;
+    }
+    
+    std::cerr << "\n=== Syntax Errors Found ===\n\n";
+    for (size_t i = 0; i < errors.size(); i++) {
+        const auto& err = errors[i];
+        std::cerr << "Error " << (i + 1) << " at line " << err.line 
+                  << ", column " << err.column << ":\n";
+        std::cerr << "  Message: " << err.message << "\n";
+        std::cerr << "  Expected: " << err.expected << "\n";
+        std::cerr << "  Found: " << err.found << "\n";
+        std::cerr << "  Recovery: " << err.recovery << "\n\n";
+    }
+    std::cerr << "Total errors: " << errors.size() << "\n";
 }
 
 std::shared_ptr<ProgramNode> Parser::parse() {

@@ -1,0 +1,18 @@
+# Error Test Case: Missing semicolon after program declaration
+# Expected error: Missing ';' after program head
+PROGRAM program 1 1
+ID ErrorTest 1 9
+# Missing SEMICOLON here
+VAR var 2 1
+ID x 2 5
+COLON : 2 6
+INTEGER integer 2 8
+SEMICOLON ; 2 15
+BEGIN begin 3 1
+ID x 4 3
+ASSIGN := 4 5
+NUMBER 10 4 8
+SEMICOLON ; 4 10
+END end 5 1
+DOT . 5 4
+END_OF_FILE EOF 6 1

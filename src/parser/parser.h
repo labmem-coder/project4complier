@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <set>
+#include <map>
 
 enum class TokenType {
     PROGRAM, BEGIN, END, CONST, VAR, PROCEDURE, FUNCTION,
@@ -38,11 +40,26 @@ public:
         : std::runtime_error(msg), token(tok) {}
 };
 
+struct ErrorInfo {
+    int line;
+    int column;
+    std::string message;
+    std::string expected;
+    std::string found;
+    std::string recovery;
+    
+    ErrorInfo(int l, int c, const std::string& msg, const std::string& exp, 
+              const std::string& fnd, const std::string& rec)
+        : line(l), column(c), message(msg), expected(exp), found(fnd), recovery(rec) {}
+};
+
 class Parser {
 private:
     std::vector<Token> tokens;
     size_t pos;
     Token current_token;
+    std::vector<ErrorInfo> errors;
+    bool error_recovery_mode;
     
     void advance();
     Token peek(int offset = 1);
@@ -51,6 +68,11 @@ private:
     bool match(TokenType type1, TokenType type2);
     bool match(TokenType type1, TokenType type2, TokenType type3);
     bool match(TokenType type1, TokenType type2, TokenType type3, TokenType type4);
+    
+    void report_error(const std::string& message, const std::string& expected, const std::string& recovery);
+    bool is_synch_token(const std::set<TokenType>& synch_set);
+    void skip_to_synch(const std::set<TokenType>& synch_set);
+    std::string token_type_to_string(TokenType type);
     
     std::shared_ptr<ProgramNode> parse_program();
     std::shared_ptr<ProgramHeadNode> parse_program_head();
@@ -108,6 +130,9 @@ private:
 public:
     Parser(const std::vector<Token>& toks);
     std::shared_ptr<ProgramNode> parse();
+    const std::vector<ErrorInfo>& get_errors() const { return errors; }
+    bool has_errors() const { return !errors.empty(); }
+    void print_errors() const;
 };
 
 #endif

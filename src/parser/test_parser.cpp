@@ -314,6 +314,13 @@ int main(int argc, char* argv[]) {
         Parser parser(tokens);
         auto ast = parser.parse();
         
+        // Print any syntax errors found during parsing
+        if (parser.has_errors()) {
+            parser.print_errors();
+            std::cout << "\n✗ Parse completed with errors" << std::endl;
+            return 1;
+        }
+        
         std::cout << std::endl << "=== Abstract Syntax Tree ===" << std::endl << std::endl;
         print_ast(ast, 0);
         std::cout << std::endl << "✓ Parse successful!" << std::endl;
